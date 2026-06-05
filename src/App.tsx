@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 
 const EVENT_START = new Date('2026-06-05T21:00:00.000Z').getTime();
 const FROM_SOFTWARE_INDEX = 0;
@@ -66,6 +66,81 @@ type TimeLeft = {
   seconds: number;
 };
 
+type EasterEggKind =
+  | 'naruto'
+  | 'hogwarts'
+  | 'long-trailer'
+  | 'jeff'
+  | 'fromsoftware'
+  | 'music'
+  | 'one-last-thing';
+
+type EasterEggToast = {
+  id: number;
+  kind: EasterEggKind;
+};
+
+const easterEggContent: Record<
+  EasterEggKind,
+  {
+    className: string;
+    signClassName: string;
+    sign: string;
+    title: string;
+    text: string;
+  }
+> = {
+  naruto: {
+    className: 'naruto-easter',
+    signClassName: 'naruto-sign',
+    sign: '忍',
+    title: 'Теневой клон аниме-анонса!',
+    text: 'Даттебайо. Чат уже готовит филлерную арку.',
+  },
+  hogwarts: {
+    className: 'hogwarts-easter',
+    signClassName: 'hogwarts-sign',
+    sign: '⚡',
+    title: 'Accio World Premiere!',
+    text: 'Письмо из Хогвартса доставлено. Ждем сову с датой релиза.',
+  },
+  'long-trailer': {
+    className: 'long-trailer-easter',
+    signClassName: 'long-trailer-sign',
+    sign: '🥪',
+    title: 'Трейлер все еще идет...',
+    text: 'Мы ждали пока Zerg отходил за своими бутербродами, теперь пускай подождет Zerg.',
+  },
+  jeff: {
+    className: 'jeff-easter',
+    signClassName: 'jeff-sign',
+    sign: '🎤',
+    title: 'Шутки шутками...',
+    text: 'А чат снова вспоминает ХаппиЗерга громче, чем сам анонс.',
+  },
+  fromsoftware: {
+    className: 'fromsoftware-easter',
+    signClassName: 'fromsoftware-sign',
+    sign: '🔥',
+    title: 'Bonfire lit.',
+    text: 'Новый FromSoftware? Приготовьте эстус, нервы и 47 попыток на босса.',
+  },
+  music: {
+    className: 'music-easter',
+    signClassName: 'music-sign',
+    sign: '🎵',
+    title: 'Музыкальная пауза!',
+    text: 'Круто конечно, но не так круто как новогодний кавер на говновоз. Лучше бы включили СА СИ из Наруто.',
+  },
+  'one-last-thing': {
+    className: 'one-last-thing-easter',
+    signClassName: 'one-last-thing-sign',
+    sign: '🎁',
+    title: 'One last thing...',
+    text: 'Джефф уже почти ушел, но дверь в хайп-комнату открылась еще раз.',
+  },
+};
+
 function getTimeLeft(): TimeLeft {
   const total = Math.max(EVENT_START - Date.now(), 0);
 
@@ -111,20 +186,7 @@ function App() {
   });
   const [celebrationKey, setCelebrationKey] = useState(0);
   const [showCelebration, setShowCelebration] = useState(false);
-  const [narutoEasterKey, setNarutoEasterKey] = useState(0);
-  const [showNarutoEaster, setShowNarutoEaster] = useState(false);
-  const [hogwartsEasterKey, setHogwartsEasterKey] = useState(0);
-  const [showHogwartsEaster, setShowHogwartsEaster] = useState(false);
-  const [longTrailerEasterKey, setLongTrailerEasterKey] = useState(0);
-  const [showLongTrailerEaster, setShowLongTrailerEaster] = useState(false);
-  const [jeffEasterKey, setJeffEasterKey] = useState(0);
-  const [showJeffEaster, setShowJeffEaster] = useState(false);
-  const [fromSoftwareEasterKey, setFromSoftwareEasterKey] = useState(0);
-  const [showFromSoftwareEaster, setShowFromSoftwareEaster] = useState(false);
-  const [musicEasterKey, setMusicEasterKey] = useState(0);
-  const [showMusicEaster, setShowMusicEaster] = useState(false);
-  const [oneLastThingEasterKey, setOneLastThingEasterKey] = useState(0);
-  const [showOneLastThingEaster, setShowOneLastThingEaster] = useState(false);
+  const [easterEggToasts, setEasterEggToasts] = useState<EasterEggToast[]>([]);
 
   const completedLines = useMemo(
     () => winningLines.filter((line) => line.every((index) => selectedCards.has(index))),
@@ -179,90 +241,6 @@ function App() {
     setCelebrationKey((key) => key + 1);
   }, [completedLines.length, hasBingo]);
 
-  useEffect(() => {
-    if (!showNarutoEaster) {
-      return;
-    }
-
-    const hideTimer = window.setTimeout(() => {
-      setShowNarutoEaster(false);
-    }, EASTER_EGG_DURATION_MS);
-
-    return () => window.clearTimeout(hideTimer);
-  }, [showNarutoEaster, narutoEasterKey]);
-
-  useEffect(() => {
-    if (!showHogwartsEaster) {
-      return;
-    }
-
-    const hideTimer = window.setTimeout(() => {
-      setShowHogwartsEaster(false);
-    }, EASTER_EGG_DURATION_MS);
-
-    return () => window.clearTimeout(hideTimer);
-  }, [showHogwartsEaster, hogwartsEasterKey]);
-
-  useEffect(() => {
-    if (!showLongTrailerEaster) {
-      return;
-    }
-
-    const hideTimer = window.setTimeout(() => {
-      setShowLongTrailerEaster(false);
-    }, EASTER_EGG_DURATION_MS);
-
-    return () => window.clearTimeout(hideTimer);
-  }, [showLongTrailerEaster, longTrailerEasterKey]);
-
-  useEffect(() => {
-    if (!showJeffEaster) {
-      return;
-    }
-
-    const hideTimer = window.setTimeout(() => {
-      setShowJeffEaster(false);
-    }, EASTER_EGG_DURATION_MS);
-
-    return () => window.clearTimeout(hideTimer);
-  }, [showJeffEaster, jeffEasterKey]);
-
-  useEffect(() => {
-    if (!showFromSoftwareEaster) {
-      return;
-    }
-
-    const hideTimer = window.setTimeout(() => {
-      setShowFromSoftwareEaster(false);
-    }, EASTER_EGG_DURATION_MS);
-
-    return () => window.clearTimeout(hideTimer);
-  }, [showFromSoftwareEaster, fromSoftwareEasterKey]);
-
-  useEffect(() => {
-    if (!showMusicEaster) {
-      return;
-    }
-
-    const hideTimer = window.setTimeout(() => {
-      setShowMusicEaster(false);
-    }, EASTER_EGG_DURATION_MS);
-
-    return () => window.clearTimeout(hideTimer);
-  }, [showMusicEaster, musicEasterKey]);
-
-  useEffect(() => {
-    if (!showOneLastThingEaster) {
-      return;
-    }
-
-    const hideTimer = window.setTimeout(() => {
-      setShowOneLastThingEaster(false);
-    }, EASTER_EGG_DURATION_MS);
-
-    return () => window.clearTimeout(hideTimer);
-  }, [showOneLastThingEaster, oneLastThingEasterKey]);
-
   function toggleCard(index: number) {
     if (index === FREE_SPACE_INDEX) {
       return;
@@ -288,39 +266,48 @@ function App() {
     });
 
     if (index === ANIME_GAME_INDEX && !wasSelected) {
-      setShowNarutoEaster(true);
-      setNarutoEasterKey((key) => key + 1);
+      showEasterEgg('naruto');
     }
 
     if (index === HOGWARTS_INDEX && !wasSelected) {
-      setShowHogwartsEaster(true);
-      setHogwartsEasterKey((key) => key + 1);
+      showEasterEgg('hogwarts');
     }
 
     if (index === LONG_TRAILER_INDEX && !wasSelected) {
-      setShowLongTrailerEaster(true);
-      setLongTrailerEasterKey((key) => key + 1);
+      showEasterEgg('long-trailer');
     }
 
     if (index === JEFF_INTERVIEW_INDEX && !wasSelected) {
-      setShowJeffEaster(true);
-      setJeffEasterKey((key) => key + 1);
+      showEasterEgg('jeff');
     }
 
     if (index === FROM_SOFTWARE_INDEX && !wasSelected) {
-      setShowFromSoftwareEaster(true);
-      setFromSoftwareEasterKey((key) => key + 1);
+      showEasterEgg('fromsoftware');
     }
 
     if (index === MUSIC_PERFORMANCE_INDEX && !wasSelected) {
-      setShowMusicEaster(true);
-      setMusicEasterKey((key) => key + 1);
+      showEasterEgg('music');
     }
 
     if (index === ONE_LAST_THING_INDEX && !wasSelected) {
-      setShowOneLastThingEaster(true);
-      setOneLastThingEasterKey((key) => key + 1);
+      showEasterEgg('one-last-thing');
     }
+  }
+
+  function showEasterEgg(kind: EasterEggKind) {
+    const id = Date.now() + Math.random();
+    const toast = { id, kind };
+
+    setEasterEggToasts((currentToasts) => [
+      ...currentToasts.filter((currentToast) => currentToast.kind !== kind),
+      toast,
+    ]);
+
+    window.setTimeout(() => {
+      setEasterEggToasts((currentToasts) =>
+        currentToasts.filter((currentToast) => currentToast.id !== id),
+      );
+    }, EASTER_EGG_DURATION_MS);
   }
 
   function resetBoard() {
@@ -447,96 +434,9 @@ function App() {
         </div>
       )}
 
-      {showNarutoEaster && (
-        <div className="naruto-easter" key={narutoEasterKey} role="status" aria-live="polite">
-          <span className="naruto-sign">忍</span>
-          <div>
-            <strong>Теневой клон аниме-анонса!</strong>
-            <p>Даттебайо. Чат уже готовит филлерную арку.</p>
-          </div>
-        </div>
-      )}
-
-      {showHogwartsEaster && (
-        <div className="hogwarts-easter" key={hogwartsEasterKey} role="status" aria-live="polite">
-          <span className="hogwarts-sign">⚡</span>
-          <div>
-            <strong>Accio World Premiere!</strong>
-            <p>Письмо из Хогвартса доставлено. Ждем сову с датой релиза.</p>
-          </div>
-        </div>
-      )}
-
-      {showLongTrailerEaster && (
-        <div
-          className="long-trailer-easter"
-          key={longTrailerEasterKey}
-          role="status"
-          aria-live="polite"
-        >
-          <span className="long-trailer-sign">🥪</span>
-          <div>
-            <strong>Трейлер все еще идет...</strong>
-            <p>
-              Мы ждали пока Zerg отходил за своими бутербродами, теперь пускай
-              подождет Zerg.
-            </p>
-          </div>
-        </div>
-      )}
-
-      {showJeffEaster && (
-        <div className="jeff-easter" key={jeffEasterKey} role="status" aria-live="polite">
-          <span className="jeff-sign">🎤</span>
-          <div>
-            <strong>Шутки шутками...</strong>
-            <p>А чат снова вспоминает ХаппиЗерга громче, чем сам анонс.</p>
-          </div>
-        </div>
-      )}
-
-      {showFromSoftwareEaster && (
-        <div
-          className="fromsoftware-easter"
-          key={fromSoftwareEasterKey}
-          role="status"
-          aria-live="polite"
-        >
-          <span className="fromsoftware-sign">🔥</span>
-          <div>
-            <strong>Bonfire lit.</strong>
-            <p>Новый FromSoftware? Приготовьте эстус, нервы и 47 попыток на босса.</p>
-          </div>
-        </div>
-      )}
-
-      {showMusicEaster && (
-        <div className="music-easter" key={musicEasterKey} role="status" aria-live="polite">
-          <span className="music-sign">🎵</span>
-          <div>
-            <strong>Музыкальная пауза!</strong>
-            <p>
-              Круто конечно, но не так круто как новогодний кавер на говновоз.
-              Лучше бы включили СА СИ из Наруто.
-            </p>
-          </div>
-        </div>
-      )}
-
-      {showOneLastThingEaster && (
-        <div
-          className="one-last-thing-easter"
-          key={oneLastThingEasterKey}
-          role="status"
-          aria-live="polite"
-        >
-          <span className="one-last-thing-sign">🎁</span>
-          <div>
-            <strong>One last thing...</strong>
-            <p>Джефф уже почти ушел, но дверь в хайп-комнату открылась еще раз.</p>
-          </div>
-        </div>
-      )}
+      {easterEggToasts.map((toast) => (
+        <EasterEggToastView key={toast.id} toast={toast} />
+      ))}
     </main>
   );
 }
@@ -549,6 +449,24 @@ function TimeBox({ label, value }: { label: string; value: number }) {
     </span>
   );
 }
+
+const EasterEggToastView = memo(function EasterEggToastView({
+  toast,
+}: {
+  toast: EasterEggToast;
+}) {
+  const content = easterEggContent[toast.kind];
+
+  return (
+    <div className={content.className} role="status" aria-live="polite">
+      <span className={content.signClassName}>{content.sign}</span>
+      <div>
+        <strong>{content.title}</strong>
+        <p>{content.text}</p>
+      </div>
+    </div>
+  );
+});
 
 function TwitchIcon() {
   return (
