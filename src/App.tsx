@@ -1,11 +1,16 @@
 import { useEffect, useMemo, useState } from 'react';
 
 const EVENT_START = new Date('2026-06-05T21:00:00.000Z').getTime();
+const FROM_SOFTWARE_INDEX = 0;
 const FREE_SPACE_INDEX = 12;
 const HOGWARTS_INDEX = 2;
 const WORLD_PREMIERE_INDEX = 3;
 const WORLD_PREMIERE_GOAL = 5;
+const LONG_TRAILER_INDEX = 6;
+const JEFF_INTERVIEW_INDEX = 11;
+const MUSIC_PERFORMANCE_INDEX = 17;
 const ANIME_GAME_INDEX = 19;
+const EASTER_EGG_DURATION_MS = 10000;
 const STORAGE_KEY = 'sgf-2026-bingo-selected-cards';
 const WORLD_PREMIERE_STORAGE_KEY = 'sgf-2026-bingo-world-premiere-count';
 
@@ -109,6 +114,14 @@ function App() {
   const [showNarutoEaster, setShowNarutoEaster] = useState(false);
   const [hogwartsEasterKey, setHogwartsEasterKey] = useState(0);
   const [showHogwartsEaster, setShowHogwartsEaster] = useState(false);
+  const [longTrailerEasterKey, setLongTrailerEasterKey] = useState(0);
+  const [showLongTrailerEaster, setShowLongTrailerEaster] = useState(false);
+  const [jeffEasterKey, setJeffEasterKey] = useState(0);
+  const [showJeffEaster, setShowJeffEaster] = useState(false);
+  const [fromSoftwareEasterKey, setFromSoftwareEasterKey] = useState(0);
+  const [showFromSoftwareEaster, setShowFromSoftwareEaster] = useState(false);
+  const [musicEasterKey, setMusicEasterKey] = useState(0);
+  const [showMusicEaster, setShowMusicEaster] = useState(false);
 
   const completedLines = useMemo(
     () => winningLines.filter((line) => line.every((index) => selectedCards.has(index))),
@@ -170,7 +183,7 @@ function App() {
 
     const hideTimer = window.setTimeout(() => {
       setShowNarutoEaster(false);
-    }, 3200);
+    }, EASTER_EGG_DURATION_MS);
 
     return () => window.clearTimeout(hideTimer);
   }, [showNarutoEaster, narutoEasterKey]);
@@ -182,10 +195,58 @@ function App() {
 
     const hideTimer = window.setTimeout(() => {
       setShowHogwartsEaster(false);
-    }, 3200);
+    }, EASTER_EGG_DURATION_MS);
 
     return () => window.clearTimeout(hideTimer);
   }, [showHogwartsEaster, hogwartsEasterKey]);
+
+  useEffect(() => {
+    if (!showLongTrailerEaster) {
+      return;
+    }
+
+    const hideTimer = window.setTimeout(() => {
+      setShowLongTrailerEaster(false);
+    }, EASTER_EGG_DURATION_MS);
+
+    return () => window.clearTimeout(hideTimer);
+  }, [showLongTrailerEaster, longTrailerEasterKey]);
+
+  useEffect(() => {
+    if (!showJeffEaster) {
+      return;
+    }
+
+    const hideTimer = window.setTimeout(() => {
+      setShowJeffEaster(false);
+    }, EASTER_EGG_DURATION_MS);
+
+    return () => window.clearTimeout(hideTimer);
+  }, [showJeffEaster, jeffEasterKey]);
+
+  useEffect(() => {
+    if (!showFromSoftwareEaster) {
+      return;
+    }
+
+    const hideTimer = window.setTimeout(() => {
+      setShowFromSoftwareEaster(false);
+    }, EASTER_EGG_DURATION_MS);
+
+    return () => window.clearTimeout(hideTimer);
+  }, [showFromSoftwareEaster, fromSoftwareEasterKey]);
+
+  useEffect(() => {
+    if (!showMusicEaster) {
+      return;
+    }
+
+    const hideTimer = window.setTimeout(() => {
+      setShowMusicEaster(false);
+    }, EASTER_EGG_DURATION_MS);
+
+    return () => window.clearTimeout(hideTimer);
+  }, [showMusicEaster, musicEasterKey]);
 
   function toggleCard(index: number) {
     if (index === FREE_SPACE_INDEX) {
@@ -219,6 +280,26 @@ function App() {
     if (index === HOGWARTS_INDEX && !wasSelected) {
       setShowHogwartsEaster(true);
       setHogwartsEasterKey((key) => key + 1);
+    }
+
+    if (index === LONG_TRAILER_INDEX && !wasSelected) {
+      setShowLongTrailerEaster(true);
+      setLongTrailerEasterKey((key) => key + 1);
+    }
+
+    if (index === JEFF_INTERVIEW_INDEX && !wasSelected) {
+      setShowJeffEaster(true);
+      setJeffEasterKey((key) => key + 1);
+    }
+
+    if (index === FROM_SOFTWARE_INDEX && !wasSelected) {
+      setShowFromSoftwareEaster(true);
+      setFromSoftwareEasterKey((key) => key + 1);
+    }
+
+    if (index === MUSIC_PERFORMANCE_INDEX && !wasSelected) {
+      setShowMusicEaster(true);
+      setMusicEasterKey((key) => key + 1);
     }
   }
 
@@ -362,6 +443,62 @@ function App() {
           <div>
             <strong>Accio World Premiere!</strong>
             <p>Письмо из Хогвартса доставлено. Ждем сову с датой релиза.</p>
+          </div>
+        </div>
+      )}
+
+      {showLongTrailerEaster && (
+        <div
+          className="long-trailer-easter"
+          key={longTrailerEasterKey}
+          role="status"
+          aria-live="polite"
+        >
+          <span className="long-trailer-sign">🥪</span>
+          <div>
+            <strong>Трейлер все еще идет...</strong>
+            <p>
+              Мы ждали пока Zerg отходил за своими бутербродами, теперь пускай
+              подождет Zerg.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {showJeffEaster && (
+        <div className="jeff-easter" key={jeffEasterKey} role="status" aria-live="polite">
+          <span className="jeff-sign">🎤</span>
+          <div>
+            <strong>Шутки шутками...</strong>
+            <p>А чат снова вспоминает ХаппиЗерга громче, чем сам анонс.</p>
+          </div>
+        </div>
+      )}
+
+      {showFromSoftwareEaster && (
+        <div
+          className="fromsoftware-easter"
+          key={fromSoftwareEasterKey}
+          role="status"
+          aria-live="polite"
+        >
+          <span className="fromsoftware-sign">🔥</span>
+          <div>
+            <strong>Bonfire lit.</strong>
+            <p>Новый FromSoftware? Приготовьте эстус, нервы и 47 попыток на босса.</p>
+          </div>
+        </div>
+      )}
+
+      {showMusicEaster && (
+        <div className="music-easter" key={musicEasterKey} role="status" aria-live="polite">
+          <span className="music-sign">🎵</span>
+          <div>
+            <strong>Музыкальная пауза!</strong>
+            <p>
+              Круто конечно, но не так круто как новогодний кавер на говновоз.
+              Лучше бы включили СА СИ из Наруто.
+            </p>
           </div>
         </div>
       )}

@@ -547,7 +547,7 @@ h2 {
     0 0 36px rgba(255, 142, 36, 0.3),
     inset 0 0 24px rgba(255, 236, 117, 0.1);
   backdrop-filter: blur(14px);
-  animation: ninjaPop 3.2s ease both;
+  animation: ninjaPop 6s ease both;
 }
 
 .naruto-sign {
@@ -598,7 +598,7 @@ h2 {
     0 0 36px rgba(187, 145, 255, 0.34),
     inset 0 0 24px rgba(255, 236, 117, 0.1);
   backdrop-filter: blur(14px);
-  animation: spellPop 3.2s ease both;
+  animation: spellPop 6s ease both;
 }
 
 .hogwarts-sign {
@@ -628,6 +628,180 @@ h2 {
   color: #eadcff;
   font-size: 0.9rem;
   line-height: 1.35;
+}
+
+.long-trailer-easter,
+.jeff-easter,
+.fromsoftware-easter {
+  position: fixed;
+  z-index: 9;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  width: min(430px, calc(100vw - 28px));
+  padding: 16px;
+  border-radius: 22px;
+  overflow: hidden;
+  backdrop-filter: blur(14px);
+}
+
+.long-trailer-easter {
+  top: clamp(14px, 4vw, 34px);
+  right: clamp(14px, 4vw, 34px);
+  border: 1px solid rgba(94, 255, 200, 0.68);
+  background:
+    linear-gradient(135deg, rgba(70, 42, 18, 0.32), rgba(6, 13, 35, 0.9)),
+    radial-gradient(circle at 18% 0%, rgba(94, 255, 200, 0.18), transparent 55%);
+  box-shadow:
+    0 0 36px rgba(94, 255, 200, 0.24),
+    inset 0 0 24px rgba(255, 236, 117, 0.1);
+  animation: snackPop 6s ease both;
+}
+
+.jeff-easter {
+  top: clamp(14px, 4vw, 34px);
+  left: clamp(14px, 4vw, 34px);
+  border: 1px solid rgba(255, 47, 216, 0.7);
+  background:
+    linear-gradient(135deg, rgba(255, 47, 216, 0.28), rgba(6, 13, 35, 0.9)),
+    radial-gradient(circle at 18% 0%, rgba(121, 247, 255, 0.2), transparent 55%);
+  box-shadow:
+    0 0 36px rgba(255, 47, 216, 0.3),
+    inset 0 0 24px rgba(121, 247, 255, 0.1);
+  animation: micPop 6s ease both;
+}
+
+.fromsoftware-easter {
+  left: 50%;
+  bottom: clamp(18px, 5vw, 48px);
+  border: 1px solid rgba(255, 118, 58, 0.76);
+  background:
+    linear-gradient(135deg, rgba(82, 17, 10, 0.42), rgba(5, 7, 19, 0.94)),
+    radial-gradient(circle at 22% 0%, rgba(255, 118, 58, 0.24), transparent 55%);
+  box-shadow:
+    0 0 38px rgba(255, 118, 58, 0.34),
+    inset 0 0 28px rgba(255, 236, 117, 0.08);
+  transform: translateX(-50%);
+  animation: emberPop 6s ease both;
+}
+
+.music-easter {
+  position: fixed;
+  left: 50%;
+  top: clamp(16px, 5vw, 46px);
+  z-index: 9;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  width: min(460px, calc(100vw - 28px));
+  padding: 16px;
+  border: 1px solid rgba(121, 247, 255, 0.72);
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, rgba(40, 24, 108, 0.44), rgba(6, 13, 35, 0.92)),
+    radial-gradient(circle at 18% 0%, rgba(255, 47, 216, 0.24), transparent 55%);
+  box-shadow:
+    0 0 38px rgba(121, 247, 255, 0.28),
+    inset 0 0 28px rgba(255, 47, 216, 0.1);
+  backdrop-filter: blur(14px);
+  transform: translateX(-50%);
+  animation: musicDrop 6s ease both;
+}
+
+.naruto-easter,
+.hogwarts-easter,
+.music-easter {
+  overflow: hidden;
+}
+
+.naruto-easter::after,
+.hogwarts-easter::after,
+.long-trailer-easter::after,
+.jeff-easter::after,
+.fromsoftware-easter::after,
+.music-easter::after {
+  position: absolute;
+  right: 12px;
+  bottom: 8px;
+  left: 12px;
+  height: 3px;
+  border-radius: 999px;
+  content: "";
+  background: linear-gradient(90deg, #79f7ff, #ff2fd8, #ffec75);
+  box-shadow: 0 0 14px rgba(121, 247, 255, 0.58);
+  transform-origin: left center;
+  animation: toastProgress 6s linear forwards;
+}
+
+.long-trailer-sign,
+.jeff-sign,
+.fromsoftware-sign,
+.music-sign {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: #07101c;
+  font-size: 1.7rem;
+  font-weight: 950;
+}
+
+.long-trailer-sign {
+  background: linear-gradient(135deg, #ffec75, #5effc8);
+  box-shadow: 0 0 24px rgba(94, 255, 200, 0.42);
+}
+
+.jeff-sign {
+  background: linear-gradient(135deg, #79f7ff, #ff2fd8);
+  box-shadow: 0 0 24px rgba(255, 47, 216, 0.42);
+}
+
+.fromsoftware-sign {
+  background: linear-gradient(135deg, #ffec75, #ff763a 52%, #7a160b);
+  box-shadow: 0 0 26px rgba(255, 118, 58, 0.52);
+}
+
+.music-sign {
+  background: linear-gradient(135deg, #79f7ff, #ff2fd8 52%, #ffec75);
+  box-shadow: 0 0 26px rgba(121, 247, 255, 0.5);
+}
+
+.long-trailer-easter strong,
+.jeff-easter strong,
+.fromsoftware-easter strong,
+.music-easter strong {
+  display: block;
+  color: #ffffff;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.long-trailer-easter p,
+.jeff-easter p,
+.fromsoftware-easter p,
+.music-easter p {
+  margin: 5px 0 0;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.long-trailer-easter p {
+  color: #ddfff3;
+}
+
+.jeff-easter p {
+  color: #ffd8f7;
+}
+
+.fromsoftware-easter p {
+  color: #ffd9c5;
+}
+
+.music-easter p {
+  color: #e6faff;
 }
 
 @keyframes lightsMove {
@@ -720,6 +894,91 @@ h2 {
     opacity: 0;
     filter: blur(4px);
     transform: translateX(-18px) translateY(6px) scale(0.98);
+  }
+}
+
+@keyframes snackPop {
+  0% {
+    opacity: 0;
+    transform: translateX(32px) scale(0.92);
+  }
+
+  10%,
+  84% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(18px) scale(0.98);
+  }
+}
+
+@keyframes micPop {
+  0% {
+    opacity: 0;
+    transform: translateY(-22px) scale(0.92);
+  }
+
+  12%,
+  82% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-14px) scale(0.98);
+  }
+}
+
+@keyframes emberPop {
+  0% {
+    opacity: 0;
+    filter: brightness(1.5) blur(6px);
+    transform: translateX(-50%) translateY(24px) scale(0.9);
+  }
+
+  12%,
+  82% {
+    opacity: 1;
+    filter: brightness(1) blur(0);
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    filter: brightness(0.8) blur(3px);
+    transform: translateX(-50%) translateY(16px) scale(0.98);
+  }
+}
+
+@keyframes musicDrop {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-28px) scale(0.9);
+  }
+
+  10%,
+  84% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-16px) scale(0.98);
+  }
+}
+
+@keyframes toastProgress {
+  from {
+    transform: scaleX(1);
+  }
+
+  to {
+    transform: scaleX(0);
   }
 }
 
