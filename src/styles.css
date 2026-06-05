@@ -547,7 +547,7 @@ h2 {
     0 0 36px rgba(255, 142, 36, 0.3),
     inset 0 0 24px rgba(255, 236, 117, 0.1);
   backdrop-filter: blur(14px);
-  animation: ninjaPop 6s ease both;
+  animation: ninjaPop 10s ease both;
 }
 
 .naruto-sign {
@@ -598,7 +598,7 @@ h2 {
     0 0 36px rgba(187, 145, 255, 0.34),
     inset 0 0 24px rgba(255, 236, 117, 0.1);
   backdrop-filter: blur(14px);
-  animation: spellPop 6s ease both;
+  animation: spellPop 10s ease both;
 }
 
 .hogwarts-sign {
@@ -632,7 +632,8 @@ h2 {
 
 .long-trailer-easter,
 .jeff-easter,
-.fromsoftware-easter {
+.fromsoftware-easter,
+.one-last-thing-easter {
   position: fixed;
   z-index: 9;
   display: flex;
@@ -655,7 +656,7 @@ h2 {
   box-shadow:
     0 0 36px rgba(94, 255, 200, 0.24),
     inset 0 0 24px rgba(255, 236, 117, 0.1);
-  animation: snackPop 6s ease both;
+  animation: snackPop 10s ease both;
 }
 
 .jeff-easter {
@@ -668,7 +669,7 @@ h2 {
   box-shadow:
     0 0 36px rgba(255, 47, 216, 0.3),
     inset 0 0 24px rgba(121, 247, 255, 0.1);
-  animation: micPop 6s ease both;
+  animation: micPop 10s ease both;
 }
 
 .fromsoftware-easter {
@@ -682,7 +683,21 @@ h2 {
     0 0 38px rgba(255, 118, 58, 0.34),
     inset 0 0 28px rgba(255, 236, 117, 0.08);
   transform: translateX(-50%);
-  animation: emberPop 6s ease both;
+  animation: emberPop 10s ease both;
+}
+
+.one-last-thing-easter {
+  right: clamp(14px, 4vw, 34px);
+  top: 50%;
+  border: 1px solid rgba(255, 236, 117, 0.8);
+  background:
+    linear-gradient(135deg, rgba(255, 236, 117, 0.22), rgba(6, 13, 35, 0.94)),
+    radial-gradient(circle at 18% 0%, rgba(255, 47, 216, 0.2), transparent 55%);
+  box-shadow:
+    0 0 42px rgba(255, 236, 117, 0.32),
+    inset 0 0 28px rgba(255, 47, 216, 0.1);
+  transform: translateY(-50%);
+  animation: encorePop 10s ease both;
 }
 
 .music-easter {
@@ -705,7 +720,7 @@ h2 {
     inset 0 0 28px rgba(255, 47, 216, 0.1);
   backdrop-filter: blur(14px);
   transform: translateX(-50%);
-  animation: musicDrop 6s ease both;
+  animation: musicDrop 10s ease both;
 }
 
 .naruto-easter,
@@ -719,7 +734,8 @@ h2 {
 .long-trailer-easter::after,
 .jeff-easter::after,
 .fromsoftware-easter::after,
-.music-easter::after {
+.music-easter::after,
+.one-last-thing-easter::after {
   position: absolute;
   right: 12px;
   bottom: 8px;
@@ -730,13 +746,14 @@ h2 {
   background: linear-gradient(90deg, #79f7ff, #ff2fd8, #ffec75);
   box-shadow: 0 0 14px rgba(121, 247, 255, 0.58);
   transform-origin: left center;
-  animation: toastProgress 6s linear forwards;
+  animation: toastProgress 10s linear forwards;
 }
 
 .long-trailer-sign,
 .jeff-sign,
 .fromsoftware-sign,
-.music-sign {
+.music-sign,
+.one-last-thing-sign {
   display: grid;
   width: 54px;
   height: 54px;
@@ -769,10 +786,16 @@ h2 {
   box-shadow: 0 0 26px rgba(121, 247, 255, 0.5);
 }
 
+.one-last-thing-sign {
+  background: linear-gradient(135deg, #ffec75, #ff2fd8 52%, #4d77ff);
+  box-shadow: 0 0 26px rgba(255, 236, 117, 0.52);
+}
+
 .long-trailer-easter strong,
 .jeff-easter strong,
 .fromsoftware-easter strong,
-.music-easter strong {
+.music-easter strong,
+.one-last-thing-easter strong {
   display: block;
   color: #ffffff;
   font-size: 1rem;
@@ -782,7 +805,8 @@ h2 {
 .long-trailer-easter p,
 .jeff-easter p,
 .fromsoftware-easter p,
-.music-easter p {
+.music-easter p,
+.one-last-thing-easter p {
   margin: 5px 0 0;
   font-size: 0.9rem;
   line-height: 1.35;
@@ -802,6 +826,10 @@ h2 {
 
 .music-easter p {
   color: #e6faff;
+}
+
+.one-last-thing-easter p {
+  color: #fff1bf;
 }
 
 @keyframes lightsMove {
@@ -969,6 +997,27 @@ h2 {
   100% {
     opacity: 0;
     transform: translateX(-50%) translateY(-16px) scale(0.98);
+  }
+}
+
+@keyframes encorePop {
+  0% {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(-50%) translateX(28px) scale(0.92);
+  }
+
+  10%,
+  84% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(-50%) translateX(0) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    filter: blur(3px);
+    transform: translateY(-50%) translateX(18px) scale(0.98);
   }
 }
 

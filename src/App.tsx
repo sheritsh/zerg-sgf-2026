@@ -10,6 +10,7 @@ const LONG_TRAILER_INDEX = 6;
 const JEFF_INTERVIEW_INDEX = 11;
 const MUSIC_PERFORMANCE_INDEX = 17;
 const ANIME_GAME_INDEX = 19;
+const ONE_LAST_THING_INDEX = 24;
 const EASTER_EGG_DURATION_MS = 10000;
 const STORAGE_KEY = 'sgf-2026-bingo-selected-cards';
 const WORLD_PREMIERE_STORAGE_KEY = 'sgf-2026-bingo-world-premiere-count';
@@ -122,6 +123,8 @@ function App() {
   const [showFromSoftwareEaster, setShowFromSoftwareEaster] = useState(false);
   const [musicEasterKey, setMusicEasterKey] = useState(0);
   const [showMusicEaster, setShowMusicEaster] = useState(false);
+  const [oneLastThingEasterKey, setOneLastThingEasterKey] = useState(0);
+  const [showOneLastThingEaster, setShowOneLastThingEaster] = useState(false);
 
   const completedLines = useMemo(
     () => winningLines.filter((line) => line.every((index) => selectedCards.has(index))),
@@ -248,6 +251,18 @@ function App() {
     return () => window.clearTimeout(hideTimer);
   }, [showMusicEaster, musicEasterKey]);
 
+  useEffect(() => {
+    if (!showOneLastThingEaster) {
+      return;
+    }
+
+    const hideTimer = window.setTimeout(() => {
+      setShowOneLastThingEaster(false);
+    }, EASTER_EGG_DURATION_MS);
+
+    return () => window.clearTimeout(hideTimer);
+  }, [showOneLastThingEaster, oneLastThingEasterKey]);
+
   function toggleCard(index: number) {
     if (index === FREE_SPACE_INDEX) {
       return;
@@ -300,6 +315,11 @@ function App() {
     if (index === MUSIC_PERFORMANCE_INDEX && !wasSelected) {
       setShowMusicEaster(true);
       setMusicEasterKey((key) => key + 1);
+    }
+
+    if (index === ONE_LAST_THING_INDEX && !wasSelected) {
+      setShowOneLastThingEaster(true);
+      setOneLastThingEasterKey((key) => key + 1);
     }
   }
 
@@ -499,6 +519,21 @@ function App() {
               Круто конечно, но не так круто как новогодний кавер на говновоз.
               Лучше бы включили СА СИ из Наруто.
             </p>
+          </div>
+        </div>
+      )}
+
+      {showOneLastThingEaster && (
+        <div
+          className="one-last-thing-easter"
+          key={oneLastThingEasterKey}
+          role="status"
+          aria-live="polite"
+        >
+          <span className="one-last-thing-sign">🎁</span>
+          <div>
+            <strong>One last thing...</strong>
+            <p>Джефф уже почти ушел, но дверь в хайп-комнату открылась еще раз.</p>
           </div>
         </div>
       )}
