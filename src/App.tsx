@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 const EVENT_START = new Date('2026-06-05T21:00:00.000Z').getTime();
 const FREE_SPACE_INDEX = 12;
+const HOGWARTS_INDEX = 2;
 const WORLD_PREMIERE_INDEX = 3;
 const WORLD_PREMIERE_GOAL = 5;
 const ANIME_GAME_INDEX = 19;
@@ -106,6 +107,8 @@ function App() {
   const [showCelebration, setShowCelebration] = useState(false);
   const [narutoEasterKey, setNarutoEasterKey] = useState(0);
   const [showNarutoEaster, setShowNarutoEaster] = useState(false);
+  const [hogwartsEasterKey, setHogwartsEasterKey] = useState(0);
+  const [showHogwartsEaster, setShowHogwartsEaster] = useState(false);
 
   const completedLines = useMemo(
     () => winningLines.filter((line) => line.every((index) => selectedCards.has(index))),
@@ -172,6 +175,18 @@ function App() {
     return () => window.clearTimeout(hideTimer);
   }, [showNarutoEaster, narutoEasterKey]);
 
+  useEffect(() => {
+    if (!showHogwartsEaster) {
+      return;
+    }
+
+    const hideTimer = window.setTimeout(() => {
+      setShowHogwartsEaster(false);
+    }, 3200);
+
+    return () => window.clearTimeout(hideTimer);
+  }, [showHogwartsEaster, hogwartsEasterKey]);
+
   function toggleCard(index: number) {
     if (index === FREE_SPACE_INDEX) {
       return;
@@ -180,6 +195,8 @@ function App() {
     if (index === WORLD_PREMIERE_INDEX && worldPremiereCount >= WORLD_PREMIERE_GOAL) {
       return;
     }
+
+    const wasSelected = selectedCards.has(index);
 
     setSelectedCards((currentCards) => {
       const nextCards = new Set(currentCards);
@@ -194,9 +211,14 @@ function App() {
       return nextCards;
     });
 
-    if (index === ANIME_GAME_INDEX) {
+    if (index === ANIME_GAME_INDEX && !wasSelected) {
       setShowNarutoEaster(true);
       setNarutoEasterKey((key) => key + 1);
+    }
+
+    if (index === HOGWARTS_INDEX && !wasSelected) {
+      setShowHogwartsEaster(true);
+      setHogwartsEasterKey((key) => key + 1);
     }
   }
 
@@ -330,6 +352,16 @@ function App() {
           <div>
             <strong>Теневой клон аниме-анонса!</strong>
             <p>Даттебайо. Чат уже готовит филлерную арку.</p>
+          </div>
+        </div>
+      )}
+
+      {showHogwartsEaster && (
+        <div className="hogwarts-easter" key={hogwartsEasterKey} role="status" aria-live="polite">
+          <span className="hogwarts-sign">⚡</span>
+          <div>
+            <strong>Accio World Premiere!</strong>
+            <p>Письмо из Хогвартса доставлено. Ждем сову с датой релиза.</p>
           </div>
         </div>
       )}

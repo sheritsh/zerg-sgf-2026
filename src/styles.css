@@ -579,6 +579,57 @@ h2 {
   line-height: 1.35;
 }
 
+.hogwarts-easter {
+  position: fixed;
+  left: clamp(14px, 4vw, 34px);
+  bottom: clamp(14px, 4vw, 34px);
+  z-index: 9;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  width: min(390px, calc(100vw - 28px));
+  padding: 16px;
+  border: 1px solid rgba(187, 145, 255, 0.72);
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, rgba(87, 43, 155, 0.32), rgba(6, 13, 35, 0.9)),
+    radial-gradient(circle at 18% 0%, rgba(255, 236, 117, 0.24), transparent 55%);
+  box-shadow:
+    0 0 36px rgba(187, 145, 255, 0.34),
+    inset 0 0 24px rgba(255, 236, 117, 0.1);
+  backdrop-filter: blur(14px);
+  animation: spellPop 3.2s ease both;
+}
+
+.hogwarts-sign {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: #2b124e;
+  background: linear-gradient(135deg, #ffec75, #bb91ff);
+  box-shadow: 0 0 24px rgba(187, 145, 255, 0.5);
+  font-size: 1.7rem;
+  font-weight: 950;
+}
+
+.hogwarts-easter strong {
+  display: block;
+  color: #ffffff;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.hogwarts-easter p {
+  margin: 5px 0 0;
+  color: #eadcff;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
 @keyframes lightsMove {
   from {
     transform: rotate(0deg) scale(1);
@@ -648,6 +699,27 @@ h2 {
   100% {
     opacity: 0;
     transform: translateX(18px) scale(0.98) rotate(-1deg);
+  }
+}
+
+@keyframes spellPop {
+  0% {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateX(-32px) translateY(10px) scale(0.9);
+  }
+
+  12%,
+  82% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0) translateY(0) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translateX(-18px) translateY(6px) scale(0.98);
   }
 }
 
