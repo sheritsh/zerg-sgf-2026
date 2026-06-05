@@ -165,7 +165,7 @@ function App() {
             чтобы запустить BINGO-праздник на экране.
           </p>
           <div className="social-links" aria-label="Социальные ссылки HappyZerg">
-            <a href="https://www.twitch.tv/holyhelge" target="_blank" rel="noreferrer">
+            <a href="https://www.twitch.tv/happyzerg" target="_blank" rel="noreferrer">
               <TwitchIcon />
               Смотреть на Twitch
             </a>
