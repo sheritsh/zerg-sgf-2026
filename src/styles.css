@@ -274,12 +274,10 @@ h2 {
   position: relative;
   display: grid;
   min-height: clamp(118px, 12vw, 158px);
-  padding: 14px;
   overflow: hidden;
   border: 1px solid rgba(124, 229, 255, 0.42);
   border-radius: 18px;
   color: #f4fbff;
-  cursor: pointer;
   background:
     linear-gradient(160deg, rgba(11, 28, 64, 0.96), rgba(7, 10, 29, 0.98)),
     radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.18), transparent 55%);
@@ -291,6 +289,23 @@ h2 {
     box-shadow 180ms ease,
     transform 180ms ease,
     background 180ms ease;
+}
+
+.tile-hit-area {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 100%;
+  min-height: 100%;
+  padding: 14px;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  background: transparent;
+}
+
+.bingo-tile.has-counter .tile-hit-area {
+  padding-bottom: 58px;
 }
 
 .bingo-tile::before {
@@ -381,6 +396,56 @@ h2 {
 .bingo-tile.is-selected .tile-stamp {
   opacity: 1;
   transform: rotate(-8deg) scale(1);
+}
+
+.premiere-counter {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
+  z-index: 2;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px;
+  border: 1px solid rgba(255, 236, 117, 0.42);
+  border-radius: 999px;
+  background: rgba(3, 9, 25, 0.72);
+  box-shadow: inset 0 0 18px rgba(255, 236, 117, 0.12);
+  backdrop-filter: blur(10px);
+}
+
+.premiere-counter span {
+  padding-left: 8px;
+  color: #ffec75;
+  font-size: 0.78rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+}
+
+.premiere-counter button {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 50%;
+  color: #07101c;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ffec75, #5effc8);
+  box-shadow: 0 0 18px rgba(255, 236, 117, 0.32);
+  font-size: 1.2rem;
+  font-weight: 950;
+  line-height: 1;
+  transition:
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.premiere-counter button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 26px rgba(255, 236, 117, 0.5);
 }
 
 .celebration {

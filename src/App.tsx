@@ -2,7 +2,10 @@ import { useEffect, useMemo, useState } from 'react';
 
 const EVENT_START = new Date('2026-06-05T21:00:00.000Z').getTime();
 const FREE_SPACE_INDEX = 12;
+const WORLD_PREMIERE_INDEX = 3;
+const WORLD_PREMIERE_GOAL = 5;
 const STORAGE_KEY = 'sgf-2026-bingo-selected-cards';
+const WORLD_PREMIERE_STORAGE_KEY = 'sgf-2026-bingo-world-premiere-count';
 
 const cards = [
   'Анонс новой игры от FromSoftware (FMC)',
@@ -14,12 +17,12 @@ const cards = [
   'Слишком долгий трейлер неинтересной игры',
   'Трейлер Alien Isolation 2',
   'Геймплей Star Wars: Zero Company',
-  'Новый Soulslike проект',
+  'Новый Souls-like проект',
   'Тизер The Elder Scrolls VI',
   'Шутки или интервью от Джеффа Кили',
   'Ничего про GTA 6 (FREE SPACE)',
   'Новости по Final Fantasy 7 Remake (часть 3)',
-  'Глубокий менеджмент / Roguelike механика',
+  'Игра, где ГГ сделали женщиной / FemineStation',
   'Анонс даты выхода на 2026/2027',
   'Новости по Sonic (Sonic Frontiers 2)',
   'Музыкальное выступление',
@@ -94,6 +97,10 @@ function App() {
 
     return selected;
   });
+  const [worldPremiereCount, setWorldPremiereCount] = useState(() => {
+    const savedCount = Number(window.localStorage.getItem(WORLD_PREMIERE_STORAGE_KEY));
+    return Number.isFinite(savedCount) ? Math.max(0, savedCount) : 0;
+  });
   const [celebrationKey, setCelebrationKey] = useState(0);
   const [showCelebration, setShowCelebration] = useState(false);
 
@@ -122,6 +129,25 @@ function App() {
   }, [selectedCards]);
 
   useEffect(() => {
+    window.localStorage.setItem(WORLD_PREMIERE_STORAGE_KEY, String(worldPremiereCount));
+
+    if (worldPremiereCount < WORLD_PREMIERE_GOAL) {
+      return;
+    }
+
+    setSelectedCards((currentCards) => {
+      if (currentCards.has(WORLD_PREMIERE_INDEX)) {
+        return currentCards;
+      }
+
+      const nextCards = new Set(currentCards);
+      nextCards.add(WORLD_PREMIERE_INDEX);
+      nextCards.add(FREE_SPACE_INDEX);
+      return nextCards;
+    });
+  }, [worldPremiereCount]);
+
+  useEffect(() => {
     if (!hasBingo) {
       setShowCelebration(false);
       return;
@@ -133,6 +159,10 @@ function App() {
 
   function toggleCard(index: number) {
     if (index === FREE_SPACE_INDEX) {
+      return;
+    }
+
+    if (index === WORLD_PREMIERE_INDEX && worldPremiereCount >= WORLD_PREMIERE_GOAL) {
       return;
     }
 
@@ -152,6 +182,11 @@ function App() {
 
   function resetBoard() {
     setSelectedCards(new Set([FREE_SPACE_INDEX]));
+    setWorldPremiereCount(0);
+  }
+
+  function incrementWorldPremiere() {
+    setWorldPremiereCount((count) => count + 1);
   }
 
   return (
@@ -206,26 +241,45 @@ function App() {
             const isSelected = selectedCards.has(index);
             const isWinning = winningIndexes.has(index);
             const isFree = index === FREE_SPACE_INDEX;
+            const hasCounter = index === WORLD_PREMIERE_INDEX;
 
             return (
-              <button
+              <div
                 className={[
                   'bingo-tile',
                   isSelected ? 'is-selected' : '',
                   isWinning ? 'is-winning' : '',
                   isFree ? 'is-free' : '',
+                  hasCounter ? 'has-counter' : '',
                 ]
                   .filter(Boolean)
                   .join(' ')}
                 key={card}
-                type="button"
-                aria-pressed={isSelected}
-                onClick={() => toggleCard(index)}
               >
-                <span className="tile-number">{formatUnit(index + 1)}</span>
-                <span className="tile-text">{card}</span>
-                <span className="tile-stamp">{isFree ? 'FREE' : 'HIT'}</span>
-              </button>
+                <button
+                  className="tile-hit-area"
+                  type="button"
+                  aria-pressed={isSelected}
+                  onClick={() => toggleCard(index)}
+                >
+                  <span className="tile-number">{formatUnit(index + 1)}</span>
+                  <span className="tile-text">{card}</span>
+                  <span className="tile-stamp">{isFree ? 'FREE' : 'HIT'}</span>
+                </button>
+
+                {hasCounter && (
+                  <div className="premiere-counter" aria-label="Счетчик World Premiere">
+                    <span>{worldPremiereCount}/{WORLD_PREMIERE_GOAL}</span>
+                    <button
+                      type="button"
+                      aria-label="Добавить World Premiere"
+                      onClick={incrementWorldPremiere}
+                    >
+                      +
+                    </button>
+                  </div>
+                )}
+              </div>
             );
           })}
         </div>
