@@ -528,6 +528,57 @@ h2 {
   animation-delay: 520ms;
 }
 
+.naruto-easter {
+  position: fixed;
+  right: clamp(14px, 4vw, 34px);
+  bottom: clamp(14px, 4vw, 34px);
+  z-index: 9;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  width: min(390px, calc(100vw - 28px));
+  padding: 16px;
+  border: 1px solid rgba(255, 236, 117, 0.68);
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, rgba(255, 142, 36, 0.24), rgba(6, 13, 35, 0.9)),
+    radial-gradient(circle at 20% 0%, rgba(255, 236, 117, 0.22), transparent 55%);
+  box-shadow:
+    0 0 36px rgba(255, 142, 36, 0.3),
+    inset 0 0 24px rgba(255, 236, 117, 0.1);
+  backdrop-filter: blur(14px);
+  animation: ninjaPop 3.2s ease both;
+}
+
+.naruto-sign {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: #07101c;
+  background: linear-gradient(135deg, #ffec75, #ff8e24);
+  box-shadow: 0 0 24px rgba(255, 236, 117, 0.42);
+  font-size: 1.7rem;
+  font-weight: 950;
+}
+
+.naruto-easter strong {
+  display: block;
+  color: #ffffff;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.naruto-easter p {
+  margin: 5px 0 0;
+  color: #ffe9ba;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
 @keyframes lightsMove {
   from {
     transform: rotate(0deg) scale(1);
@@ -579,6 +630,24 @@ h2 {
   100% {
     opacity: 0;
     transform: scale(1.35) rotate(120deg);
+  }
+}
+
+@keyframes ninjaPop {
+  0% {
+    opacity: 0;
+    transform: translateX(32px) scale(0.92) rotate(1deg);
+  }
+
+  12%,
+  82% {
+    opacity: 1;
+    transform: translateX(0) scale(1) rotate(0deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(18px) scale(0.98) rotate(-1deg);
   }
 }
 

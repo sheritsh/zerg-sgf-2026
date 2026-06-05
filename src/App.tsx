@@ -4,6 +4,7 @@ const EVENT_START = new Date('2026-06-05T21:00:00.000Z').getTime();
 const FREE_SPACE_INDEX = 12;
 const WORLD_PREMIERE_INDEX = 3;
 const WORLD_PREMIERE_GOAL = 5;
+const ANIME_GAME_INDEX = 19;
 const STORAGE_KEY = 'sgf-2026-bingo-selected-cards';
 const WORLD_PREMIERE_STORAGE_KEY = 'sgf-2026-bingo-world-premiere-count';
 
@@ -103,6 +104,8 @@ function App() {
   });
   const [celebrationKey, setCelebrationKey] = useState(0);
   const [showCelebration, setShowCelebration] = useState(false);
+  const [narutoEasterKey, setNarutoEasterKey] = useState(0);
+  const [showNarutoEaster, setShowNarutoEaster] = useState(false);
 
   const completedLines = useMemo(
     () => winningLines.filter((line) => line.every((index) => selectedCards.has(index))),
@@ -157,6 +160,18 @@ function App() {
     setCelebrationKey((key) => key + 1);
   }, [completedLines.length, hasBingo]);
 
+  useEffect(() => {
+    if (!showNarutoEaster) {
+      return;
+    }
+
+    const hideTimer = window.setTimeout(() => {
+      setShowNarutoEaster(false);
+    }, 3200);
+
+    return () => window.clearTimeout(hideTimer);
+  }, [showNarutoEaster, narutoEasterKey]);
+
   function toggleCard(index: number) {
     if (index === FREE_SPACE_INDEX) {
       return;
@@ -178,6 +193,11 @@ function App() {
       nextCards.add(FREE_SPACE_INDEX);
       return nextCards;
     });
+
+    if (index === ANIME_GAME_INDEX) {
+      setShowNarutoEaster(true);
+      setNarutoEasterKey((key) => key + 1);
+    }
   }
 
   function resetBoard() {
@@ -300,6 +320,16 @@ function App() {
             <button type="button" onClick={() => setShowCelebration(false)}>
               Продолжить игру
             </button>
+          </div>
+        </div>
+      )}
+
+      {showNarutoEaster && (
+        <div className="naruto-easter" key={narutoEasterKey} role="status" aria-live="polite">
+          <span className="naruto-sign">忍</span>
+          <div>
+            <strong>Теневой клон аниме-анонса!</strong>
+            <p>Даттебайо. Чат уже готовит филлерную арку.</p>
           </div>
         </div>
       )}
